@@ -11,7 +11,7 @@ class AbstractMelonOrder(object):
         self.order_type = None
         self.country_code = country_code
 
-    def get_total(self, qty, month=None, country_code=None):
+    def get_total(self, month=None, country_code=None):
         """Calculate price."""
 
         base_price = 5
@@ -20,7 +20,7 @@ class AbstractMelonOrder(object):
 
         total = (1 + self.tax) * self.qty * base_price
 
-        if country_code is not None and qty < 10:
+        if country_code is not None and self.qty < 10:
             total += 3
 
         return total
