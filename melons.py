@@ -1,3 +1,5 @@
+from random import randint
+from datetime import weekday, time
 # """This file should have our order classes in it."""
 
 
@@ -11,11 +13,22 @@ class AbstractMelonOrder(object):
         self.order_type = None
         self.country_code = country_code
 
-    def get_total(self, month=None, country_code=None):
+    def get_base_price(self):
+        base_price = randint(5, 9)
+
+        if weekday is < 5 and time >= 08:00:00 and time <= 13:00:00:
+            
+
+
+
+        return base_price
+
+    def get_total(self, country_code=None):
         """Calculate price."""
 
-        base_price = 5
-        if month == 12:
+        base_price = self.get_base_price()
+
+        if self.species == "Christmas":
             base_price = base_price*1.5
 
         total = (1 + self.tax) * self.qty * base_price
@@ -39,7 +52,7 @@ class DomesticMelonOrder(AbstractMelonOrder):
 
     def __init__(self, species, qty):
         """Initialize melon order attributes"""
-        
+
         super(DomesticMelonOrder, self).__init__(species, qty)
 
 
@@ -47,7 +60,7 @@ class InternationalMelonOrder(AbstractMelonOrder):
     """An international (non-US) melon order."""
 
     order_type = "international"
-    tax = 0.17  
+    tax = 0.17
 
     def __init__(self, species, qty, country_code):
         """Initialize melon order attributes"""
@@ -56,8 +69,24 @@ class InternationalMelonOrder(AbstractMelonOrder):
 
         super(InternationalMelonOrder, self).__init__(species, qty, country_code)
 
-
     def get_country_code(self):
         """Return the country code."""
 
         return self.country_code
+
+
+class GovernmentMelonOrder(AbstractMelonOrder):
+    """A government tax-free melon order."""
+
+    order_type = "government"
+    tax = 0.00
+    passed_inspection = False
+
+    def __init__(self, species, qty):
+        """Initialize melon order attributes"""
+
+        super(GovernmentMelonOrder, self).__init__(species, qty)
+
+    def mark_inspection(self, passed):
+        if passed is True:
+            self.passed_inspection = True
