@@ -3,7 +3,7 @@
 
 class AbstractMelonOrder(object):
 
-    def __init__(self, species, qty, country_code=None):
+    def __init__(self, species, qty, month=None, country_code=None):
 
         self.species = species
         self.qty = qty
@@ -11,11 +11,18 @@ class AbstractMelonOrder(object):
         self.order_type = None
         self.country_code = country_code
 
-    def get_total(self):
+    def get_total(self, qty, month=None, country_code=None):
         """Calculate price."""
 
         base_price = 5
+        if month == 12:
+            base_price = base_price*1.5
+
         total = (1 + self.tax) * self.qty * base_price
+
+        if country_code is not None and qty < 10:
+            total += 3
+
         return total
 
     def mark_shipped(self):
