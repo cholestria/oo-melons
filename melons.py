@@ -1,6 +1,6 @@
 from random import randint
-from datetime import weekday, time
-# """This file should have our order classes in it."""
+from datetime import date, time, datetime
+
 
 
 class AbstractMelonOrder(object):
@@ -14,12 +14,13 @@ class AbstractMelonOrder(object):
         self.country_code = country_code
 
     def get_base_price(self):
-        base_price = randint(5, 9)
+        base_price = 5
+        # randint(5, 9)
 
-        if weekday is < 5 and time >= 08:00:00 and time <= 13:00:00:
-            
+        current = datetime.now()
 
-
+        if current.weekday() < 7 and current.hour < 11:
+            base_price += 3        
 
         return base_price
 
